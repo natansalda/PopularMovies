@@ -23,7 +23,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import pl.nataliana.popularmovies.R;
 import pl.nataliana.popularmovies.adapters.MovieAdapter;
 import pl.nataliana.popularmovies.model.Movie;
 
@@ -191,9 +190,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                Toast.makeText(MainActivity.this, "Error loading movies", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "Error", error);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("Failed: ", ""+statusCode);
+                Log.d("Error : ", "" + throwable);
             }
 
         });

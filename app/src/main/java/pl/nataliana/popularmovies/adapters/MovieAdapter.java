@@ -1,18 +1,15 @@
 package pl.nataliana.popularmovies.adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import pl.nataliana.popularmovies.R;
 import pl.nataliana.popularmovies.MainActivity;

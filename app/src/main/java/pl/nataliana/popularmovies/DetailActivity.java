@@ -41,10 +41,8 @@ public class DetailActivity extends Activity {
 
         tvOriginalTitle.setText(movie.getTitle());
         tvOverView.setText(movie.getSynopsis());
-        tvVoteAverage.setText(movie.getRating());
+        tvVoteAverage.setText(String.format("%s %.1f", movie.getRating()));
         tvReleaseDate.setText(movie.getDate());
-
-
     }
 }
 
