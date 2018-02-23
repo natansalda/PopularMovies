@@ -185,12 +185,15 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     Log.e(TAG, "Error", e);
                 }
+                gridView.setAdapter(movieAdapter);
+                movieAdapter.notifyDataSetChanged();
             }
 
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
                 Toast.makeText(MainActivity.this, "Error loading movies", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Error", error);
             }
 
         });
