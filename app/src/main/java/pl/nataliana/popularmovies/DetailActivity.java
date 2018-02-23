@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import pl.nataliana.popularmovies.R;
 import pl.nataliana.popularmovies.model.Movie;
 
@@ -41,7 +43,7 @@ public class DetailActivity extends Activity {
 
         tvOriginalTitle.setText(movie.getTitle());
         tvOverView.setText(movie.getSynopsis());
-        tvVoteAverage.setText(String.format("%s %.1f", movie.getRating()));
+        tvVoteAverage.setText(movie.getRating());
         tvReleaseDate.setText(movie.getDate());
     }
 }

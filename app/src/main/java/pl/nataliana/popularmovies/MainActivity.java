@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
                                 movie.getString("overview"),
                                 movie.getString("release_date"),
                                 movie.getString("poster_path"),
-                                movie.getString("popularity"),
-                                movie.getString("vote_average"));
+                                movie.getString("vote_average"),
+                                movie.getString("popularity"));
 
                     }
                     movieAdapter.clear();
