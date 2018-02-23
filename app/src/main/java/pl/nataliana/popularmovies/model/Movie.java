@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Natalia Nazaruk on 19.02.2018.
  */
 
-public class Movie {
+public class Movie implements Parcelable {
 
     private long id;
     private String title;
@@ -32,6 +32,28 @@ public class Movie {
         this.poster = poster;
         this.id = id;
     }
+
+    protected Movie(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        synopsis = in.readString();
+        date = in.readString();
+        poster = in.readString();
+        rating = in.readString();
+        popularity = in.readString();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -61,29 +83,26 @@ public class Movie {
         return popularity;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(poster);
-        dest.writeString(synopsis);
-        dest.writeString(rating);
-        dest.writeString(date);
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    private Movie(Parcel in) {
-        title = in.readString();
-        poster = in.readString();
-        synopsis = in.readString();
-        rating = (String) in.readValue(Double.class.getClassLoader());
-        date = in.readString();
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(title);
+        parcel.writeString(synopsis);
+        parcel.writeString(date);
+        parcel.writeString(poster);
+        parcel.writeString(rating);
+        parcel.writeString(popularity);
     }
 
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
-        }
+    public String getPosterUrl() {
+        final String TMDB_POSTER_BASE_URL = "https://image.tmdb.org/t/p/w185";
 
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
+        return TMDB_POSTER_BASE_URL + poster;
+    }
 }

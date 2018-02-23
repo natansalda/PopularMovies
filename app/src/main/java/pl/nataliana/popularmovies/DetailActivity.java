@@ -34,7 +34,7 @@ public class DetailActivity extends Activity {
         Movie movie = intent.getParcelableExtra(getString(R.string.movie_parcelable));
 
         Picasso.with(this)
-                .load(movie.getPoster())
+                .load(movie.getPosterUrl())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
                 .into(ivPoster);
