@@ -34,7 +34,7 @@ import pl.nataliana.popularmovies.model.Movie;
 public class MainActivity extends AppCompatActivity {
 
     // My application constans. Please change MY_API_KEY to your API.
-    public static final String MY_API_KEY = "012cf0d90e5154cb19cd974134e46b89"; //Please put your API key here
+    public static final String MY_API_KEY = ""; //Please put your API key here
     public static final String SINGLE_MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/%s?api_key=" + MY_API_KEY;
     public static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String POSTER_SIZE = "w185";
