@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import pl.nataliana.movieapp.R;
+import pl.nataliana.popularmovies.R;
 import pl.nataliana.popularmovies.adapters.MovieAdapter;
 import pl.nataliana.popularmovies.model.Movie;
 
