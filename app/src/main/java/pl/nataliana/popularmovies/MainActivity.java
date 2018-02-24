@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        //Log.v(LOG_TAG, "onSaveInstanceState");
-
         int numMovieObjects = gridView.getCount();
         if (numMovieObjects > 0) {
             // Get Movie objects from gridview
@@ -191,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("Failed: ", ""+statusCode);
+                Log.d("Failed: ", "" + statusCode);
                 Log.d("Error : ", "" + throwable);
             }
 
