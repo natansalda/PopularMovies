@@ -33,8 +33,8 @@ import pl.nataliana.popularmovies.model.Movie;
 public class MainActivity extends AppCompatActivity {
 
     // My application constans. Please change MY_API_KEY to your API.
-    public static final String MY_API_KEY = ""; //Please put your API key here
-    public static final String SINGLE_MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/%s?api_key=" + MY_API_KEY;
+    public static final String API_KEY = BuildConfig.API_KEY; //Please add your proper API key to project:gradle.properties file
+    public static final String SINGLE_MOVIE_BASE_URL = "http://api.themoviedb.org/3/movie/%s?api_key=" + API_KEY;
     public static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String POSTER_SIZE = "w185";
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (MY_API_KEY.isEmpty()) {
+        if (API_KEY.isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.obtain_api_key, Toast.LENGTH_LONG).show();
             return;
         }
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPosters(String sort) {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, getSort(sort), MY_API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, getSort(sort), API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override
