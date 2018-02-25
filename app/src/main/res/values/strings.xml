@@ -5,11 +5,13 @@
     <string name="movie_title">Movie title</string>
     <string name="plot_synopsis">Overview</string>
     <string name="rating_title">Rating</string>
-    <string name="rating_value">Value</string>
+    <string name="rating_value">8.5</string>
     <string name="date_title">Release date</string>
     <string name="date_value">01.01.2018</string>
     <string name="movie_poster_content_description">Movie poster</string>
     <string name="obtain_api_key">Please obtain your API KEY first from themoviedb.org</string>
     <string name="response_json">Response from url:</string>
     <string name="movie_parcelable">movie_parcelable</string>
+    <string name="check_reviews">Check reviews</string>
+    <string name="see_trailer">See trailer</string>
 </resources>

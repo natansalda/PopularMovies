@@ -20,67 +20,106 @@
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher_round" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/original_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            tools:text="@string/movie_title" />
 
-            <TextView
-                android:id="@+id/original_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                tools:text="@string/movie_title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/rating_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/rating_title"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/rating_value_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginTop="22dp"
+                    android:text="@string/rating_value"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="44sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/rating_value_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/rating_value"
-                android:textStyle="italic" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/synopsis_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/plot_synopsis"
-                android:textStyle="bold" />
+                <Button
+                    android:id="@+id/review_button"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/check_reviews"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/synopsis_text_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/plot_synopsis" />
+                <Button
+                    android:id="@+id/trailer_button"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/holo_red_dark"
+                    android:text="@string/see_trailer"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/date_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/date_title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/date_value_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/date_value"
-                android:textStyle="italic" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/synopsis_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/plot_synopsis"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/synopsis_text_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/plot_synopsis"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/date_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/date_title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/date_value"
+            android:textSize="20sp"
+            android:textStyle="italic" />
     </LinearLayout>
 </ScrollView>
