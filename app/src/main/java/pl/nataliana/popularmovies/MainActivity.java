@@ -42,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     public GridView gridView;
 
-    // ArrayList of movies
-    ArrayList<Movie> movies = new ArrayList<>();
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 Movie movie = movieAdapter.getItem(position);
                 //Toast.makeText(getActivity(), "Movie title:" + movie.title, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(getResources().getString(R.string.movie_parcelable), (Parcelable) movie);
+                intent.putExtra(getResources().getString(R.string.movie_parcelable), movie);
                 startActivity(intent);
             }
         });
@@ -100,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Save Movie objects to bundle
-            outState.putParcelableArray(getString(R.string.movie_parcelable), (Parcelable[]) movies);
+            outState.putParcelableArray(getString(R.string.movie_parcelable), movies);
         }
 
         super.onSaveInstanceState(outState);

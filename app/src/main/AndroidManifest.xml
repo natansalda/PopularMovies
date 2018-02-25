@@ -25,6 +25,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.nataliana.popularmovies.MainActivity" />
         </activity>
+        <activity android:name=".ReviewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.nataliana.popularmovies.DetailActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ import pl.nataliana.popularmovies.model.Movie;
 
 public class MovieAdapter extends ArrayAdapter<Movie> {
 
-    public ArrayList<Movie> movies;
+    private ArrayList<Movie> movies;
     private Context context;
 
     public MovieAdapter(Context context, ArrayList<Movie> movieList) {
