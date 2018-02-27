@@ -12,6 +12,7 @@
     <string name="obtain_api_key">Please obtain your API KEY first from themoviedb.org</string>
     <string name="response_json">Response from url:</string>
     <string name="movie_parcelable">movie_parcelable</string>
+    <string name="review_parcelable">review_parcelable</string>
     <string name="check_reviews">Check reviews</string>
     <string name="see_trailer">See trailer</string>
 </resources>

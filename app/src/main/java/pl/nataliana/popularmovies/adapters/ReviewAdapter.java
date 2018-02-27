@@ -41,11 +41,6 @@ public class ReviewAdapter extends ArrayAdapter<Review> {
     }
 
     @Override
-    public long getItemId(int position) {
-        return getItem(position).getId();
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View output = convertView;
         if (output == null) {

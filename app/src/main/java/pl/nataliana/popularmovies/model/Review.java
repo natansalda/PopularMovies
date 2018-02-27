@@ -9,11 +9,11 @@ import android.os.Parcelable;
 
 public class Review implements Parcelable {
 
-    private long id;
+    private String id;
     private String author;
     private String review;
 
-    public Review(long id, String author, String review) {
+    public Review(String id, String author, String review) {
 
         this.id = id;
         this.author = author;
@@ -22,7 +22,7 @@ public class Review implements Parcelable {
     }
 
     private Review(Parcel in) {
-        id = in.readLong();
+        id = in.readString();
         author = in.readString();
         review = in.readString();
 
@@ -40,7 +40,7 @@ public class Review implements Parcelable {
         }
     };
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -59,7 +59,7 @@ public class Review implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(id);
+        parcel.writeString(id);
         parcel.writeString(author);
         parcel.writeString(review);
     }
