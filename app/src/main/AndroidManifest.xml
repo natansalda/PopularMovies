@@ -20,12 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity">
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName="pl.nataliana.popularmovies.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.nataliana.popularmovies.MainActivity" />
         </activity>
-        <activity android:name=".ReviewActivity">
+        <activity
+            android:name=".ReviewActivity"
+            android:parentActivityName="pl.nataliana.popularmovies.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.nataliana.popularmovies.DetailActivity" />

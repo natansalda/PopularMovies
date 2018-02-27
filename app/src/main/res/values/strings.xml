@@ -15,4 +15,6 @@
     <string name="review_parcelable">review_parcelable</string>
     <string name="check_reviews">Check reviews</string>
     <string name="see_trailer">See trailer</string>
+    <string name="movie_id_extras">movie_id_extras</string>
+    <string name="movie_id">movie_id</string>
 </resources>

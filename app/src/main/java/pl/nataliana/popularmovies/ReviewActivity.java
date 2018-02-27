@@ -32,7 +32,7 @@ public class ReviewActivity extends Activity {
     public static final String SINGLE_MOVIE_REVIEWS_URL = "https://api.themoviedb.org/3/movie/%s/reviews?api_key=" + API_KEY;
     private ReviewAdapter reviewAdapter;
     public ListView reviewsView;
-    public String movieID;
+    public long movieID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,7 @@ public class ReviewActivity extends Activity {
         reviewAdapter = new ReviewAdapter(this, new ArrayList<Review>());
         reviewsView = findViewById(R.id.list);
 
-        Intent intent = getIntent();
-        movieID = intent.getStringExtra("MOVIE_ID");
+        movieID = getIntent().getExtras().getLong(getString(R.string.movie_id));
 
         if (savedInstanceState == null) {
             showReviews();
@@ -82,7 +81,7 @@ public class ReviewActivity extends Activity {
 
     private void showReviews() {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_REVIEWS_URL, movieID, API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_REVIEWS_URL,String.valueOf(movieID) , API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override

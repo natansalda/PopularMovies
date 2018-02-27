@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Movie movie = movieAdapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                intent.putExtra(getResources().getString(R.string.movie_parcelable), movie);
+                Long MovieID= movie.getId();
+                intent.putExtra(getString(R.string.movie_id_extras),MovieID);
+                intent.putExtra(getString(R.string.movie_parcelable), movie);
                 startActivity(intent);
             }
         });

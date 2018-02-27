@@ -3,11 +3,14 @@ package pl.nataliana.popularmovies;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.DeadObjectException;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,7 +23,8 @@ import pl.nataliana.popularmovies.model.Movie;
 
 public class DetailActivity extends Activity {
 
-    private String movieID;
+    private Long movieID;
+    private static final String TAG = DetailActivity.class.getSimpleName();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,8 @@ public class DetailActivity extends Activity {
         Button btTrailer = findViewById(R.id.trailer_button);
 
         Intent intent = getIntent();
-        movieID = intent.getStringExtra("MOVIE_ID");
+        movieID = getIntent().getExtras().getLong(getString(R.string.movie_id_extras));
+        Toast.makeText(getApplicationContext(),String.valueOf(movieID),Toast.LENGTH_LONG).show();
         Movie movie = intent.getParcelableExtra(getString(R.string.movie_parcelable));
 
         Picasso.with(this)
@@ -53,7 +58,7 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailActivity.this, ReviewActivity.class);
-                intent.putExtra("MOVIE_ID", movieID);
+                intent.putExtra(getString(R.string.movie_id), movieID);
                 startActivity(intent);
             }
         });
