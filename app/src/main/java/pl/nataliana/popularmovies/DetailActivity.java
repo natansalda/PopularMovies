@@ -53,7 +53,7 @@ public class DetailActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailActivity.this, ReviewActivity.class);
-                intent.putExtra(movieID, "MOVIE_ID");
+                intent.putExtra("MOVIE_ID", movieID);
                 startActivity(intent);
             }
         });
