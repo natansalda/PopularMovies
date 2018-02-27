@@ -40,7 +40,6 @@ public class DetailActivity extends Activity {
 
         Intent intent = getIntent();
         movieID = getIntent().getExtras().getLong(getString(R.string.movie_id_extras));
-        Toast.makeText(getApplicationContext(),String.valueOf(movieID),Toast.LENGTH_LONG).show();
         Movie movie = intent.getParcelableExtra(getString(R.string.movie_parcelable));
 
         Picasso.with(this)

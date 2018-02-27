@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,6 +25,9 @@ public class ReviewAdapter extends ArrayAdapter<Review> {
     public ReviewAdapter(Context context, ArrayList<Review> reviewList) {
         super(context, 0, reviewList);
         reviews = new ArrayList<>();
+        if (reviewList != null) {
+            reviews = reviewList;
+        }
         this.context = context;
     }
 
@@ -47,6 +51,9 @@ public class ReviewAdapter extends ArrayAdapter<Review> {
 
         TextView authorTextView = output.findViewById(R.id.list_item_review_author);
         TextView reviewTextView = output.findViewById(R.id.list_item_review_text);
+        authorTextView.setText(reviews.get(position).getAuthor());
+        reviewTextView.setText(reviews.get(position).getReview());
+
         return output;
     }
 }

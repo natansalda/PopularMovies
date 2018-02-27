@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -77,6 +78,7 @@ public class ReviewActivity extends Activity {
         }
 
         super.onSaveInstanceState(outState);
+        Toast.makeText(getApplicationContext(),"Looks like this movie doesn't have any reviews yet!",Toast.LENGTH_LONG).show();
     }
 
     private void showReviews() {
