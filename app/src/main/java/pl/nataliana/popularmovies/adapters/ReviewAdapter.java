@@ -24,7 +24,7 @@ public class ReviewAdapter extends ArrayAdapter<Review> {
 
     public ReviewAdapter(Context context, ArrayList<Review> reviewList) {
         super(context, 0, reviewList);
-        reviews = new ArrayList<>();
+        reviews = reviewList;
         if (reviewList != null) {
             reviews = reviewList;
         }
