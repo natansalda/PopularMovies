@@ -29,7 +29,14 @@
         </activity>
         <activity
             android:name=".ReviewActivity"
-            android:parentActivityName="pl.nataliana.popularmovies.MainActivity">
+            android:parentActivityName="pl.nataliana.popularmovies.DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pl.nataliana.popularmovies.DetailActivity" />
+        </activity>
+        <activity
+            android:name=".TrailerActivity"
+            android:parentActivityName="pl.nataliana.popularmovies.DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.nataliana.popularmovies.DetailActivity" />

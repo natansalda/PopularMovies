@@ -17,4 +17,7 @@
     <string name="see_trailer">See trailer</string>
     <string name="movie_id_extras">movie_id_extras</string>
     <string name="movie_id">movie_id</string>
+    <string name="review_dummy">That was really awesome movie, lot of action, drama, love, emotions.</string>
+    <string name="reviewer_dummy">Natalia Nazaruk</string>
+    <string name="trailers_parcelable">trailers_parcelable</string>
 </resources>

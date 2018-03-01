@@ -61,5 +61,14 @@ public class DetailActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        btTrailer.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, TrailerActivity.class);
+                intent.putExtra(getString(R.string.movie_id), movieID);
+                startActivity(intent);
+            }
+        });
     }
 }
