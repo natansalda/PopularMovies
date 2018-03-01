@@ -78,5 +78,6 @@ public class DetailActivity extends Activity {
                 startActivity(intent);
             }
         });
+        
     }
 }
