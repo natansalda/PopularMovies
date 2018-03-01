@@ -30,7 +30,8 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ImageView ivPoster = findViewById(R.id.poster_image_iv);
+        final ImageView ivPoster = findViewById(R.id.poster_image_iv);
+        final ImageView ivStar = findViewById(R.id.fav_iv);
         TextView tvOriginalTitle = findViewById(R.id.original_title_tv);
         TextView tvOverView = findViewById(R.id.synopsis_text_tv);
         TextView tvVoteAverage = findViewById(R.id.rating_value_tv);
@@ -52,6 +53,13 @@ public class DetailActivity extends Activity {
         tvOverView.setText(movie.getSynopsis());
         tvVoteAverage.setText(movie.getRating());
         tvReleaseDate.setText(movie.getDate());
+
+        ivStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Movie added to favorites!",Toast.LENGTH_LONG).show();
+            }
+        });
 
         btReview.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
