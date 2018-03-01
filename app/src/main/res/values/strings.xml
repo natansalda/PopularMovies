@@ -21,4 +21,5 @@
     <string name="reviewer_dummy">Natalia Nazaruk</string>
     <string name="trailers_parcelable">trailers_parcelable</string>
     <string name="youtube">https://www.youtube.com/watch?v=</string>
+    <string name="no_trailers">Looks like this movie doesn\'t have any trailers yet!</string>
 </resources>

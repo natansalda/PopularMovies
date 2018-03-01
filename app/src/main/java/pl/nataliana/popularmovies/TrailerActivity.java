@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import pl.nataliana.popularmovies.adapters.TrailerAdapter;
 import pl.nataliana.popularmovies.model.Trailer;
+import pl.nataliana.popularmovies.model.json.JsonConverterFacade;
 
 /**
  * Created by Natalia Nazaruk on 28.02.2018.
@@ -32,6 +32,7 @@ public class TrailerActivity extends Activity {
 
     public static final String API_KEY = BuildConfig.API_KEY; //Please add your proper API key to project:gradle.properties file
     private static final String TAG = TrailerActivity.class.getSimpleName();
+    public static final String YOUTUBE_BASE_URL = "https://www.youtube.com/watch?v=";
     public static final String SINGLE_MOVIE_TRAILER_URL = "https://api.themoviedb.org/3/movie/%s/videos?api_key=" + API_KEY;
     private TrailerAdapter trailerAdapter;
     public ListView trailersView;
@@ -54,11 +55,12 @@ public class TrailerActivity extends Activity {
                     getParcelableArray(getString(R.string.trailers_parcelable));
 
             if (parcelable != null) {
-
                 // Load trailer objects into view
                 trailersView.setAdapter(trailerAdapter);
             }
         }
+
+
     }
 
     @Override
@@ -80,49 +82,38 @@ public class TrailerActivity extends Activity {
 
     private void showTrailers() {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_TRAILER_URL, String.valueOf(movieID), API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_TRAILER_URL, String.valueOf(movieID));
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-                Trailer[] trailerList = new Trailer[0];
-                try {
-                    JSONObject jsonObj = new JSONObject(responseBody);
-                    JSONArray trailers = jsonObj.getJSONArray("results");
+                final Trailer[] TRAILER_LIST = getTrailerListFromResponse(responseBody);
+                fillAdapterWithNewData(TRAILER_LIST);
 
-                    // looping through trailers
-                    trailerList = new Trailer[trailers.length()];
-                    for (int i = 0; i < trailers.length(); ++i) {
-                        JSONObject trailer = trailers.getJSONObject(i);
-                        trailerList[i] = new Trailer(
-                                trailer.getString("id"),
-                                trailer.getString("key"));
-                    }
-                    trailerAdapter.clear();
-                    for (Trailer trailer : trailerList) {
-                        if (trailer != null) {
-                            Log.v(TAG, "POST EXECUTE URLS" + trailer);
-                            trailerAdapter.add(trailer);
-                        }
-                    }
-                    trailerAdapter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    Log.e(TAG, "Error", e);
-                }
-                trailersView.setAdapter(trailerAdapter);
-                trailerAdapter.notifyDataSetChanged();
-
-                final Trailer[] finalTrailerList = trailerList;
                 trailersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String key = finalTrailerList[position].getKey();
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + key));
-                        startActivity(intent);
+                        String key = TRAILER_LIST[position].getKey();
+                        showTrailerWithIntent(key);
                     }
                 });
+            }
 
+            private void showTrailerWithIntent(String key) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_BASE_URL + key));
+                System.out.println("intent = " + YOUTUBE_BASE_URL + key);
+                Toast.makeText(getApplicationContext(), "Movie key: " + key, Toast.LENGTH_LONG).show();
+                startActivity(intent);
+            }
+
+            private Trailer[] getTrailerListFromResponse(String responseBody) {
+                try {
+                    JSONObject parsedResponse = new JSONObject(responseBody);
+                    return JsonConverterFacade.convertResultsIntoTrailers(parsedResponse);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return new Trailer[0];
+                }
             }
 
             @Override
@@ -132,5 +123,17 @@ public class TrailerActivity extends Activity {
             }
 
         });
+    }
+
+    private void fillAdapterWithNewData(Trailer[] trailerList) {
+        trailerAdapter.clear();
+        for (Trailer trailer : trailerList) {
+            if (trailer != null) {
+                Log.v(TAG, "POST EXECUTE URLS" + trailer);
+                trailerAdapter.add(trailer);
+            }
+        }
+        trailersView.setAdapter(trailerAdapter);
+        trailerAdapter.notifyDataSetChanged();
     }
 }
