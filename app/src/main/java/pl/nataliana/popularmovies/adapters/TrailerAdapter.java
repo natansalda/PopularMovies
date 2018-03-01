@@ -24,6 +24,7 @@ public class TrailerAdapter extends ArrayAdapter<Trailer> {
 
     private ArrayList<Trailer> trailers;
     private Context context;
+    public static TextView linkTextView;
 
     public TrailerAdapter(Context context, ArrayList<Trailer> trailerList) {
         super(context, 0, trailerList);
@@ -49,7 +50,7 @@ public class TrailerAdapter extends ArrayAdapter<Trailer> {
             output = inflater.inflate(R.layout.trailer_list_item, parent, false);
         }
 
-        TextView linkTextView = output.findViewById(R.id.list_item_trailer_link);
+        linkTextView = output.findViewById(R.id.list_item_trailer_link);
         linkTextView.setText("https://www.youtube.com/watch?v=" + trailers.get(position).getKey());
         return output;
     }

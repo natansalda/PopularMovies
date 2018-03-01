@@ -66,13 +66,7 @@ public class TrailerActivity extends Activity {
             }
         }
 
-        trailersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + trailer.get(position).getKey()));
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
@@ -110,7 +104,6 @@ public class TrailerActivity extends Activity {
                         trailerList[i] = new Trailer(
                                 trailer.getString("id"),
                                 trailer.getString("key"));
-
                     }
                     trailerAdapter.clear();
                     for (Trailer trailer : trailerList) {
@@ -126,9 +119,18 @@ public class TrailerActivity extends Activity {
                 }
                 trailersView.setAdapter(trailerAdapter);
                 trailerAdapter.notifyDataSetChanged();
+
+                trailersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + key));
+                        Toast.makeText(getApplicationContext(), "Movie key: " + key, Toast.LENGTH_LONG).show();
+                        startActivity(intent);
+                    }
+                });
+
             }
-
-
+            
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("Failed: ", "" + statusCode);

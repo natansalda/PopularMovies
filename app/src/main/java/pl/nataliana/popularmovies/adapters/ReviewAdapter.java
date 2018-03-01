@@ -51,6 +51,8 @@ public class ReviewAdapter extends ArrayAdapter<Review> {
 
         TextView authorTextView = output.findViewById(R.id.list_item_review_author);
         TextView reviewTextView = output.findViewById(R.id.list_item_review_text);
+        TextView authorTitleTextView = output.findViewById(R.id.list_item_review_author_title);
+        authorTitleTextView.setText("Author: ");
         authorTextView.setText(reviews.get(position).getAuthor());
         reviewTextView.setText(reviews.get(position).getReview());
 
