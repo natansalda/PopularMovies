@@ -1,6 +1,9 @@
 package pl.nataliana.popularmovies.adapters;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pl.nataliana.popularmovies.R;
+import pl.nataliana.popularmovies.TrailerActivity;
 import pl.nataliana.popularmovies.model.Trailer;
 
 /**
@@ -46,8 +50,9 @@ public class TrailerAdapter extends ArrayAdapter<Trailer> {
         }
 
         TextView linkTextView = output.findViewById(R.id.list_item_trailer_link);
-        linkTextView.setText(trailers.get(position).getKey());
-
+        linkTextView.setText("https://www.youtube.com/watch?v=" + trailers.get(position).getKey());
         return output;
     }
+
+
 }

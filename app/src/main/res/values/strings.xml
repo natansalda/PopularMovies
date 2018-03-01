@@ -20,4 +20,5 @@
     <string name="review_dummy">That was really awesome movie, lot of action, drama, love, emotions.</string>
     <string name="reviewer_dummy">Natalia Nazaruk</string>
     <string name="trailers_parcelable">trailers_parcelable</string>
+    <string name="youtube">https://www.youtube.com/watch?v=</string>
 </resources>

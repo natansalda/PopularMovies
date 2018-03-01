@@ -1,9 +1,13 @@
 package pl.nataliana.popularmovies;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,9 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import pl.nataliana.popularmovies.adapters.ReviewAdapter;
 import pl.nataliana.popularmovies.adapters.TrailerAdapter;
-import pl.nataliana.popularmovies.model.Review;
 import pl.nataliana.popularmovies.model.Trailer;
 
 /**
@@ -54,7 +56,7 @@ public class TrailerActivity extends Activity {
 
             if (parcelable != null) {
                 int numTrailerObjects = parcelable.length;
-                Trailer[] trailers = new Trailer [numTrailerObjects];
+                Trailer[] trailers = new Trailer[numTrailerObjects];
                 for (int i = 0; i < numTrailerObjects; i++) {
                     trailers[i] = (Trailer) parcelable[i];
                 }
@@ -63,6 +65,14 @@ public class TrailerActivity extends Activity {
                 trailersView.setAdapter(trailerAdapter);
             }
         }
+
+        trailersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + trailers.get(position).getKey()));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -79,12 +89,12 @@ public class TrailerActivity extends Activity {
         }
 
         super.onSaveInstanceState(outState);
-        Toast.makeText(getApplicationContext(),"Looks like this movie doesn't have any trailers yet!",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Looks like this movie doesn't have any trailers yet!", Toast.LENGTH_LONG).show();
     }
 
     private void showTrailers() {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_TRAILER_URL,String.valueOf(movieID) , API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_TRAILER_URL, String.valueOf(movieID), API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override
@@ -94,7 +104,7 @@ public class TrailerActivity extends Activity {
                     JSONArray trailers = jsonObj.getJSONArray("results");
 
                     // looping through trailers
-                    Trailer[] trailerList = new Trailer[5];
+                    Trailer[] trailerList = new Trailer[100];
                     for (int i = 0; i < trailers.length(); ++i) {
                         JSONObject trailer = trailers.getJSONObject(i);
                         trailerList[i] = new Trailer(
