@@ -93,7 +93,7 @@ public class ReviewActivity extends Activity {
                     JSONArray reviews = jsonObj.getJSONArray("results");
 
                     // looping through reviews
-                    Review[] reviewList = new Review[5];
+                    Review[] reviewList = new Review[reviews.length()];
                     for (int i = 0; i < reviews.length(); ++i) {
                         JSONObject review = reviews.getJSONObject(i);
                         reviewList[i] = new Review(

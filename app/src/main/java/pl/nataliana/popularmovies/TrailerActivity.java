@@ -36,7 +36,6 @@ public class TrailerActivity extends Activity {
     private TrailerAdapter trailerAdapter;
     public ListView trailersView;
     public long movieID;
-    public String key = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +54,11 @@ public class TrailerActivity extends Activity {
                     getParcelableArray(getString(R.string.trailers_parcelable));
 
             if (parcelable != null) {
-                int numTrailerObjects = parcelable.length;
-                Trailer[] trailers = new Trailer[numTrailerObjects];
-                for (int i = 0; i < numTrailerObjects; i++) {
-                    trailers[i] = (Trailer) parcelable[i];
-                }
 
                 // Load trailer objects into view
                 trailersView.setAdapter(trailerAdapter);
             }
         }
-
-
     }
 
     @Override
@@ -93,12 +85,13 @@ public class TrailerActivity extends Activity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                Trailer[] trailerList = new Trailer[0];
                 try {
                     JSONObject jsonObj = new JSONObject(responseBody);
                     JSONArray trailers = jsonObj.getJSONArray("results");
 
                     // looping through trailers
-                    Trailer[] trailerList = new Trailer[100];
+                    trailerList = new Trailer[trailers.length()];
                     for (int i = 0; i < trailers.length(); ++i) {
                         JSONObject trailer = trailers.getJSONObject(i);
                         trailerList[i] = new Trailer(
@@ -120,17 +113,18 @@ public class TrailerActivity extends Activity {
                 trailersView.setAdapter(trailerAdapter);
                 trailerAdapter.notifyDataSetChanged();
 
+                final Trailer[] finalTrailerList = trailerList;
                 trailersView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String key = finalTrailerList[position].getKey();
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + key));
-                        Toast.makeText(getApplicationContext(), "Movie key: " + key, Toast.LENGTH_LONG).show();
                         startActivity(intent);
                     }
                 });
 
             }
-            
+
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("Failed: ", "" + statusCode);
