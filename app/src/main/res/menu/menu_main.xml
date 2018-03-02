@@ -8,12 +8,19 @@
         android:orderInCategory="1"
         android:icon="@drawable/ic_thumb_up"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/sort_by_popularity"
         android:orderInCategory="1"
         android:icon="@drawable/ic_remove_red_eye"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/sort_by_fav"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_action_star_10"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
 </menu>
