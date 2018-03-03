@@ -30,12 +30,10 @@ public class FavMovieContract {
         public static final String MOVIE_OVERVIEW = "overview";
         public static final String MOVIE_VOTE_AVERAGE = "vote_average";
         public static final String MOVIE_RELEASE_DATE = "release_date";
-        public static final String MOVIE_REVIEWS = "reviews";
-        public static final String MOVIE_TRAILERS = "trailers";
 
         public static final String[] PROJECTION =
                 {MOVIE_ID, MOVIE_BACKDROP_URI, MOVIE_TITLE, MOVIE_POSTER, MOVIE_OVERVIEW,
-                        MOVIE_VOTE_AVERAGE, MOVIE_RELEASE_DATE, MOVIE_REVIEWS, MOVIE_TRAILERS};
+                        MOVIE_VOTE_AVERAGE, MOVIE_RELEASE_DATE};
 
         public static final String SORT_ORDER =
                 MOVIE_VOTE_AVERAGE + " ASC";

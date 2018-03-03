@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,9 +22,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import pl.nataliana.popularmovies.adapters.MovieAdapter;
+import pl.nataliana.popularmovies.data.FavMovieContract;
+import pl.nataliana.popularmovies.data.FavMovieDbHelper;
 import pl.nataliana.popularmovies.model.Movie;
 
 /**
@@ -131,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
             String sortMessage = "Sort by popularity selected";
             Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.sort_by_fav) {
+            Context context = MainActivity.this;
+            showFavorites(FavMovieContract.MovieEntry.MOVIE_ID);
+            String sortMessage = "Sort by favorites selected";
+            Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
+            return true;
         } else
             return super.onOptionsItemSelected(item);
     }
@@ -146,6 +156,57 @@ public class MainActivity extends AppCompatActivity {
     private void showPosters(String sort) {
         AsyncHttpClient client = new AsyncHttpClient();
         String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, getSort(sort), API_KEY);
+        client.get(requestUrl, new TextHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
+                try {
+                    JSONObject jsonObj = new JSONObject(responseBody);
+                    JSONArray movies = jsonObj.getJSONArray("results");
+
+                    // looping through movies
+                    Movie[] movieList = new Movie[20];
+                    for (int i = 0; i < movies.length(); ++i) {
+                        JSONObject movie = movies.getJSONObject(i);
+                        movieList[i] = new Movie(
+                                movie.getLong("id"),
+                                movie.getString("original_title"),
+                                movie.getString("overview"),
+                                movie.getString("release_date"),
+                                movie.getString("poster_path"),
+                                movie.getString("vote_average"),
+                                movie.getString("popularity"));
+
+                    }
+                    movieAdapter.clear();
+                    for (Movie movie : movieList) {
+                        if (movie != null) {
+                            Log.v(TAG, "POST EXECUTE IMAGE URLS" + movie);
+                            movieAdapter.add(movie);
+                        }
+                    }
+                    movieAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    Log.e(TAG, "Error", e);
+                }
+                gridView.setAdapter(movieAdapter);
+                movieAdapter.notifyDataSetChanged();
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("Failed: ", "" + statusCode);
+                Log.d("Error : ", "" + throwable);
+            }
+
+        });
+    }
+
+    private void showFavorites(String database) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override

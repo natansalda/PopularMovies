@@ -30,8 +30,6 @@ public class FavMovieDbHelper extends SQLiteOpenHelper {
                 FavMovieContract.MovieEntry.MOVIE_OVERVIEW + " TEXT NOT NULL," +
                 FavMovieContract.MovieEntry.MOVIE_VOTE_AVERAGE + " TEXT NOT NULL," +
                 FavMovieContract.MovieEntry.MOVIE_RELEASE_DATE + " TEXT NOT NULL," +
-                FavMovieContract.MovieEntry.MOVIE_REVIEWS + " TEXT NOT NULL," +
-                FavMovieContract.MovieEntry.MOVIE_TRAILERS + " TEXT NOT NULL," +
                 "UNIQUE (" + FavMovieContract.MovieEntry.MOVIE_ID +") ON CONFLICT IGNORE"+
                 " );";
 
