@@ -60,11 +60,11 @@ public class DetailActivity extends Activity {
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean inFavorites = checkFavorites();
+                boolean inFavorites = checkFavorites(movieID);
                 if (inFavorites) {
-                    deleteFromFavorites();
+                    deleteFromFavorites(movieID);
                 } else {
-                    addToFav();
+                    addToFav(movieID);
                 }
                 setIconFavorites();
             }
@@ -90,14 +90,14 @@ public class DetailActivity extends Activity {
     }
 
     // Add movie to the database
-    private void addToFav() {
+    private void addToFav(Long movieID) {
 
         Uri uri = FavMovieContract.MovieEntry.CONTENT_URI;
         ContentResolver resolver = this.getContentResolver();
         ContentValues values = new ContentValues();
         values.clear();
 
-        values.put(FavMovieContract.MovieEntry.MOVIE_ID, movie.getId());
+        values.put(FavMovieContract.MovieEntry.MOVIE_ID, movieID);
         values.put(FavMovieContract.MovieEntry.MOVIE_TITLE, movie.getTitle());
         values.put(FavMovieContract.MovieEntry.MOVIE_OVERVIEW, movie.getSynopsis());
         values.put(FavMovieContract.MovieEntry.MOVIE_RELEASE_DATE, movie.getDate());
@@ -111,14 +111,14 @@ public class DetailActivity extends Activity {
 
 
     // Delete movie from the database
-    private void deleteFromFavorites() {
+    private void deleteFromFavorites(Long movieID) {
 
         Uri uri = FavMovieContract.MovieEntry.CONTENT_URI;
         ContentResolver resolver = this.getContentResolver();
 
         long noDeleted = resolver.delete(uri,
                 FavMovieContract.MovieEntry.MOVIE_ID + " = ? ",
-                new String[]{movie.getId() + ""});
+                new String[]{movieID + ""});
 
         Toast.makeText(getApplicationContext(), "Movie removed favorites!", Toast.LENGTH_LONG).show();
 
@@ -126,9 +126,9 @@ public class DetailActivity extends Activity {
 
 
     // Check if the movie is already in the database
-    private boolean checkFavorites() {
+    private boolean checkFavorites(Long movieID) {
 
-        Uri uri = FavMovieContract.MovieEntry.buildMovieUri(movie.getId());
+        Uri uri = FavMovieContract.MovieEntry.buildMovieUri(movieID);
         ContentResolver resolver = this.getContentResolver();
         Cursor cursor = null;
 
@@ -150,7 +150,7 @@ public class DetailActivity extends Activity {
 
     // Set proper favorites icon
     private void setIconFavorites() {
-        boolean inFavorites = checkFavorites();
+        boolean inFavorites = checkFavorites(movieID);
         ImageView addToFav = findViewById(R.id.fav_iv);
 
         if (inFavorites) {
