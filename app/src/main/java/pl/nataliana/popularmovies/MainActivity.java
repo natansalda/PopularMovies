@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 // Load movie objects into view
                 gridView.setAdapter(movieAdapter);
             }
+
+            String savedOption = savedInstanceState.getString("mChoosenOption");
+            showPosters(savedOption);
+
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
             // Save Movie objects to bundle
             outState.putParcelableArray(getString(R.string.movie_parcelable), movies);
+            outState.putString("mChoosenOption", mChoosenOption);
+            if (mChoosenOption.equals("favorites")) {
+                showFavorites();
+            }
         }
 
         super.onSaveInstanceState(outState);
@@ -138,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.sort_by_fav) {
             Context context = MainActivity.this;
+            mChoosenOption = "favorites";
             showFavorites();
             String sortMessage = "Sort by favorites selected";
             Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
@@ -207,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showFavorites() {
         Uri uri = FavMovieContract.MovieEntry.CONTENT_URI;
-        ContentResolver resolver = this.getContentResolver();
+        ContentResolver resolver = getContentResolver();
         Cursor cursor = null;
 
         try {
@@ -223,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (cursor.moveToFirst()) {
                 do {
-                    Movie movie = new Movie(cursor.getInt(1), cursor.getString(3),
-                            cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
+                    Movie movie = new Movie(cursor.getInt(1), cursor.getString(2),
+                            cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
                     movieAdapter.add(movie);
                 } while (cursor.moveToNext());
             }

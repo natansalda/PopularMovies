@@ -60,7 +60,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
         String url = MainActivity.MOVIE_POSTER_BASE_URL + MainActivity.POSTER_SIZE + movie.getPoster();
         Picasso.with(context).load(url).placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder).into(posterImageView);
+                .error(R.drawable.nowifi).into(posterImageView);
         return output;
     }
 }

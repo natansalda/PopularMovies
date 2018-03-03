@@ -61,6 +61,9 @@ public class ReviewActivity extends Activity {
                 // Load review objects into view
                 reviewsView.setAdapter(reviewAdapter);
             }
+
+            movieID = getIntent().getExtras().getLong(getString(R.string.movie_id));
+            showReviews();
         }
     }
 
@@ -75,10 +78,10 @@ public class ReviewActivity extends Activity {
 
             // Save Review objects to bundle
             outState.putParcelableArray(getString(R.string.review_parcelable), reviews);
+            outState.putLong(getString(R.string.movie_id), movieID);
         }
 
         super.onSaveInstanceState(outState);
-        Toast.makeText(getApplicationContext(),"Looks like this movie doesn't have any reviews yet!",Toast.LENGTH_LONG).show();
     }
 
     private void showReviews() {

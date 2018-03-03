@@ -58,6 +58,9 @@ public class TrailerActivity extends Activity {
                 // Load trailer objects into view
                 trailersView.setAdapter(trailerAdapter);
             }
+
+            movieID = getIntent().getExtras().getLong(getString(R.string.movie_id));
+            showTrailers();
         }
 
 
@@ -74,10 +77,10 @@ public class TrailerActivity extends Activity {
 
             // Save Trailer objects to bundle
             outState.putParcelableArray(getString(R.string.trailers_parcelable), trailers);
+            outState.putLong(getString(R.string.movie_id), movieID);
         }
 
         super.onSaveInstanceState(outState);
-        Toast.makeText(getApplicationContext(), "Looks like this movie doesn't have any trailers yet!", Toast.LENGTH_LONG).show();
     }
 
     private void showTrailers() {
@@ -102,7 +105,6 @@ public class TrailerActivity extends Activity {
             private void showTrailerWithIntent(String key) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_BASE_URL + key));
                 System.out.println("intent = " + YOUTUBE_BASE_URL + key);
-                Toast.makeText(getApplicationContext(), "Movie key: " + key, Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
 

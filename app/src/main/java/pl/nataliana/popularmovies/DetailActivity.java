@@ -48,7 +48,7 @@ public class DetailActivity extends Activity {
 
         Picasso.with(this)
                 .load(movie.getPosterUrl())
-                .error(R.drawable.placeholder)
+                .error(R.drawable.nowifi)
                 .placeholder(R.drawable.placeholder)
                 .into(ivPoster);
 
@@ -56,11 +56,12 @@ public class DetailActivity extends Activity {
         tvOverView.setText(movie.getSynopsis());
         tvVoteAverage.setText(movie.getRating());
         tvReleaseDate.setText(movie.getDate());
+        setIconFavorites();
 
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean inFavorites = checkFavorites(movieID);
+                boolean inFavorites = checkFavorites(movie.getId());
                 if (inFavorites) {
                     deleteFromFavorites(movieID);
                 } else {
@@ -150,7 +151,7 @@ public class DetailActivity extends Activity {
 
     // Set proper favorites icon
     private void setIconFavorites() {
-        boolean inFavorites = checkFavorites(movieID);
+        boolean inFavorites = checkFavorites(movie.getId());
         ImageView addToFav = findViewById(R.id.fav_iv);
 
         if (inFavorites) {
