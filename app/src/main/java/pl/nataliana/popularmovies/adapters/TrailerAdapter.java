@@ -54,6 +54,4 @@ public class TrailerAdapter extends ArrayAdapter<Trailer> {
         linkTextView.setText("https://www.youtube.com/watch?v=" + trailers.get(position).getKey());
         return output;
     }
-
-
 }

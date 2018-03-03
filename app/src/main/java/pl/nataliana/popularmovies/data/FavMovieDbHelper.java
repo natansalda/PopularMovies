@@ -24,12 +24,12 @@ public class FavMovieDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOVIE_TABLE = "CREATE TABLE " + FavMovieContract.MovieEntry.TABLE_NAME + " (" +
                 FavMovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 FavMovieContract.MovieEntry.MOVIE_ID + " TEXT UNIQUE NOT NULL," +
-                FavMovieContract.MovieEntry.MOVIE_BACKDROP_URI + " TEXT NOT NULL," +
                 FavMovieContract.MovieEntry.MOVIE_TITLE + " TEXT NOT NULL," +
-                FavMovieContract.MovieEntry.MOVIE_POSTER + " TEXT NOT NULL," +
                 FavMovieContract.MovieEntry.MOVIE_OVERVIEW + " TEXT NOT NULL," +
-                FavMovieContract.MovieEntry.MOVIE_VOTE_AVERAGE + " TEXT NOT NULL," +
                 FavMovieContract.MovieEntry.MOVIE_RELEASE_DATE + " TEXT NOT NULL," +
+                FavMovieContract.MovieEntry.MOVIE_POSTER + " TEXT NOT NULL," +
+                FavMovieContract.MovieEntry.MOVIE_VOTE_AVERAGE + " TEXT NOT NULL," +
+                FavMovieContract.MovieEntry.MOVIE_POPULARITY + " TEXT NOT NULL," +
                 "UNIQUE (" + FavMovieContract.MovieEntry.MOVIE_ID +") ON CONFLICT IGNORE"+
                 " );";
 

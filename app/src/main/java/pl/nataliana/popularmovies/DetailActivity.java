@@ -26,7 +26,7 @@ import pl.nataliana.popularmovies.model.Movie;
 public class DetailActivity extends Activity {
 
     private Long movieID;
-    private static final String TAG = DetailActivity.class.getSimpleName();
+    private static final String TAG = DetailActivity.class.getSimpleName(); // For debugging purposes
     private Movie movie;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class DetailActivity extends Activity {
 
         Intent intent = getIntent();
         movieID = getIntent().getExtras().getLong(getString(R.string.movie_id_extras));
-        Movie movie = intent.getParcelableExtra(getString(R.string.movie_parcelable));
+        movie = intent.getParcelableExtra(getString(R.string.movie_parcelable));
 
         Picasso.with(this)
                 .load(movie.getPosterUrl())
@@ -59,8 +59,14 @@ public class DetailActivity extends Activity {
 
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                checkFavorites();
+            public void onClick(View v) {
+                boolean inFavorites = checkFavorites();
+                if (inFavorites) {
+                    deleteFromFavorites();
+                } else {
+                    addToFav();
+                }
+                setIconFavorites();
             }
         });
 
@@ -92,12 +98,12 @@ public class DetailActivity extends Activity {
         values.clear();
 
         values.put(FavMovieContract.MovieEntry.MOVIE_ID, movie.getId());
-        values.put(FavMovieContract.MovieEntry.MOVIE_BACKDROP_URI, movie.getTitle());
         values.put(FavMovieContract.MovieEntry.MOVIE_TITLE, movie.getTitle());
-        values.put(FavMovieContract.MovieEntry.MOVIE_POSTER, movie.getPoster());
         values.put(FavMovieContract.MovieEntry.MOVIE_OVERVIEW, movie.getSynopsis());
-        values.put(FavMovieContract.MovieEntry.MOVIE_VOTE_AVERAGE, movie.getRating());
         values.put(FavMovieContract.MovieEntry.MOVIE_RELEASE_DATE, movie.getDate());
+        values.put(FavMovieContract.MovieEntry.MOVIE_POSTER, movie.getPoster());
+        values.put(FavMovieContract.MovieEntry.MOVIE_VOTE_AVERAGE, movie.getRating());
+        values.put(FavMovieContract.MovieEntry.MOVIE_POPULARITY, movie.getPopularity());
 
         Uri check = resolver.insert(uri, values);
         Toast.makeText(getApplicationContext(), "Movie added to favorites!", Toast.LENGTH_LONG).show();
@@ -142,5 +148,15 @@ public class DetailActivity extends Activity {
         return false;
     }
 
+    // Set proper favorites icon
+    private void setIconFavorites() {
+        boolean inFavorites = checkFavorites();
+        ImageView addToFav = findViewById(R.id.fav_iv);
 
+        if (inFavorites) {
+            addToFav.setImageResource(R.drawable.fav_full);
+        } else {
+            addToFav.setImageResource(R.drawable.fav);
+        }
+    }
 }

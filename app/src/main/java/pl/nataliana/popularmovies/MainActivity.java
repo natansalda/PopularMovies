@@ -1,10 +1,12 @@
 package pl.nataliana.popularmovies;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -22,12 +24,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 import pl.nataliana.popularmovies.adapters.MovieAdapter;
 import pl.nataliana.popularmovies.data.FavMovieContract;
-import pl.nataliana.popularmovies.data.FavMovieDbHelper;
 import pl.nataliana.popularmovies.model.Movie;
 
 /**
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private String mChoosenOption = "popularity";
     private MovieAdapter movieAdapter;
     public GridView gridView;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Movie movie = movieAdapter.getItem(position);
                 Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-                Long MovieID= movie.getId();
-                intent.putExtra(getString(R.string.movie_id_extras),MovieID);
+                Long MovieID = movie.getId();
+                intent.putExtra(getString(R.string.movie_id_extras), MovieID);
                 intent.putExtra(getString(R.string.movie_parcelable), movie);
                 startActivity(intent);
             }
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.sort_by_fav) {
             Context context = MainActivity.this;
-            showFavorites(FavMovieContract.MovieEntry.MOVIE_ID);
+            showFavorites();
             String sortMessage = "Sort by favorites selected";
             Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
             return true;
@@ -204,54 +205,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showFavorites(String database) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, API_KEY);
-        client.get(requestUrl, new TextHttpResponseHandler() {
+    private void showFavorites() {
+        Uri uri = FavMovieContract.MovieEntry.CONTENT_URI;
+        ContentResolver resolver = this.getContentResolver();
+        Cursor cursor = null;
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseBody) {
-                try {
-                    JSONObject jsonObj = new JSONObject(responseBody);
-                    JSONArray movies = jsonObj.getJSONArray("results");
+        try {
 
-                    // looping through movies
-                    Movie[] movieList = new Movie[20];
-                    for (int i = 0; i < movies.length(); ++i) {
-                        JSONObject movie = movies.getJSONObject(i);
-                        movieList[i] = new Movie(
-                                movie.getLong("id"),
-                                movie.getString("original_title"),
-                                movie.getString("overview"),
-                                movie.getString("release_date"),
-                                movie.getString("poster_path"),
-                                movie.getString("vote_average"),
-                                movie.getString("popularity"));
+            cursor = resolver.query(
+                    uri,
+                    null,
+                    null,
+                    null,
+                    null);
 
-                    }
-                    movieAdapter.clear();
-                    for (Movie movie : movieList) {
-                        if (movie != null) {
-                            Log.v(TAG, "POST EXECUTE IMAGE URLS" + movie);
-                            movieAdapter.add(movie);
-                        }
-                    }
-                    movieAdapter.notifyDataSetChanged();
+            movieAdapter.clear();
 
-                } catch (JSONException e) {
-                    Log.e(TAG, "Error", e);
-                }
-                gridView.setAdapter(movieAdapter);
-                movieAdapter.notifyDataSetChanged();
+            if (cursor.moveToFirst()) {
+                do {
+                    Movie movie = new Movie(cursor.getInt(1), cursor.getString(3),
+                            cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
+                    movieAdapter.add(movie);
+                } while (cursor.moveToNext());
             }
 
+        } finally {
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("Failed: ", "" + statusCode);
-                Log.d("Error : ", "" + throwable);
-            }
+            if (cursor != null)
+                cursor.close();
 
-        });
+        }
     }
 }

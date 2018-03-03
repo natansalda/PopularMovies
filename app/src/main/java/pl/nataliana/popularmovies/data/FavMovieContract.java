@@ -12,7 +12,6 @@ public class FavMovieContract {
 
     public static final String CONTENT_AUTHORITY = "pl.nataliana.popularmovies";
     public static final Uri BASE_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-
     public static final String MOVIES_PATH = "movies";
 
     public static final class MovieEntry implements BaseColumns {
@@ -24,16 +23,16 @@ public class FavMovieContract {
 
         public static final String TABLE_NAME = "movies";
         public static final String MOVIE_ID = "id";
-        public static final String MOVIE_BACKDROP_URI = "backdrop_path";
         public static final String MOVIE_TITLE = "original_title";
-        public static final String MOVIE_POSTER = "poster_path";
         public static final String MOVIE_OVERVIEW = "overview";
-        public static final String MOVIE_VOTE_AVERAGE = "vote_average";
         public static final String MOVIE_RELEASE_DATE = "release_date";
+        public static final String MOVIE_POSTER = "poster_path";
+        public static final String MOVIE_VOTE_AVERAGE = "vote_average";
+        public static final String MOVIE_POPULARITY = "popularity";
 
         public static final String[] PROJECTION =
-                {MOVIE_ID, MOVIE_BACKDROP_URI, MOVIE_TITLE, MOVIE_POSTER, MOVIE_OVERVIEW,
-                        MOVIE_VOTE_AVERAGE, MOVIE_RELEASE_DATE};
+                {MOVIE_ID, MOVIE_TITLE, MOVIE_OVERVIEW, MOVIE_RELEASE_DATE, MOVIE_POSTER,
+                        MOVIE_VOTE_AVERAGE, MOVIE_POPULARITY};
 
         public static final String SORT_ORDER =
                 MOVIE_VOTE_AVERAGE + " ASC";
