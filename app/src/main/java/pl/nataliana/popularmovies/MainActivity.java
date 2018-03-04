@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String POSTER_SIZE = "w185";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private String mChoosenOption = "popularity";
+    private String mChoosenOption = "";
     private MovieAdapter movieAdapter;
     public GridView gridView;
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.gridview);
 
         if (savedInstanceState == null) {
-            showPosters(mChoosenOption);
+            showPosters("popular");
         } else {
             // Get data from local resources
             // Get Movie objects
@@ -79,8 +79,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String savedOption = savedInstanceState.getString("mChoosenOption");
-            showPosters(savedOption);
+            if (savedOption.equals("favorites")) {
+                mChoosenOption = savedOption;
+                showFavorites();
+            } else {
 
+                showPosters(savedOption);
+            }
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,9 +114,6 @@ public class MainActivity extends AppCompatActivity {
             // Save Movie objects to bundle
             outState.putParcelableArray(getString(R.string.movie_parcelable), movies);
             outState.putString("mChoosenOption", mChoosenOption);
-            if (mChoosenOption.equals("favorites")) {
-                showFavorites();
-            }
         }
 
         super.onSaveInstanceState(outState);
@@ -119,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         //Inflate the menu with menu_main.xml
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -130,18 +131,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //Sort posters depending on what user clicks
-        if (id == R.id.sort_by_popularity && !mChoosenOption.equals("popularity")) {
+        if (id == R.id.sort_by_popularity) {
             Context context = MainActivity.this;
-            mChoosenOption = "popularity";
-            showPosters(mChoosenOption);
-            String sortMessage = "Sort by rating selected";
-            Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (id == R.id.sort_by_rating && !mChoosenOption.equals("rating")) {
-            Context context = MainActivity.this;
-            mChoosenOption = "rating";
+            mChoosenOption = "popular";
             showPosters(mChoosenOption);
             String sortMessage = "Sort by popularity selected";
+            Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.sort_by_rating) {
+            Context context = MainActivity.this;
+            mChoosenOption = "top_rated";
+            showPosters(mChoosenOption);
+            String sortMessage = "Sort by rating selected";
             Toast.makeText(context, sortMessage, Toast.LENGTH_SHORT).show();
             return true;
         } else if (id == R.id.sort_by_fav) {
@@ -155,17 +156,9 @@ public class MainActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
     }
 
-    private String getSort(String sort) {
-        if (sort.equals("popularity"))
-            return "popular";
-        else if (sort.equals("rating"))
-            return "top_rated";
-        return "popular";
-    }
-
     private void showPosters(String sort) {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, getSort(sort), API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, sort, API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override
