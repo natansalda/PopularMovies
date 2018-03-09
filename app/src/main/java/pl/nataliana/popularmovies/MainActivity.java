@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String POSTER_SIZE = "w185";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private String mChoosenOption = "";
+    private String mChoosenOption = "popular";
     private MovieAdapter movieAdapter;
     public GridView gridView;
 
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 mChoosenOption = savedOption;
                 showFavorites();
             } else {
-
                 showPosters(savedOption);
             }
         }
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showPosters(String sort) {
         AsyncHttpClient client = new AsyncHttpClient();
-        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, sort, API_KEY);
+        String requestUrl = String.format(SINGLE_MOVIE_BASE_URL, getSort(sort), API_KEY);
         client.get(requestUrl, new TextHttpResponseHandler() {
 
             @Override
@@ -237,5 +236,13 @@ public class MainActivity extends AppCompatActivity {
                 cursor.close();
 
         }
+    }
+
+    private String getSort(String sort) {
+        if (sort.equals("popular"))
+            return "popular";
+        else if (sort.equals("top_rated"))
+            return "top_rated";
+        return "popular";
     }
 }
