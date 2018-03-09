@@ -60,12 +60,15 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.gridview);
 
         if (savedInstanceState == null) {
-            showPosters("popular");
+            showPosters(mChoosenOption);
         } else {
             // Get data from local resources
             // Get Movie objects
             Parcelable[] parcelable = savedInstanceState.
                     getParcelableArray(getString(R.string.movie_parcelable));
+
+            String savedOption = savedInstanceState.getString("mChoosenOption");
+            int index = savedInstanceState.getInt("index");
 
             if (parcelable != null) {
                 int numMovieObjects = parcelable.length;
@@ -76,15 +79,17 @@ public class MainActivity extends AppCompatActivity {
 
                 // Load movie objects into view
                 gridView.setAdapter(movieAdapter);
+
             }
 
-            String savedOption = savedInstanceState.getString("mChoosenOption");
             if (savedOption.equals("favorites")) {
                 mChoosenOption = savedOption;
                 showFavorites();
+
             } else {
                 mChoosenOption = savedOption;
                 showPosters(savedOption);
+
             }
         }
 
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < numMovieObjects; i++) {
                 movies[i] = (Movie) gridView.getItemAtPosition(i);
             }
-
+            
             // Save Movie objects to bundle
             outState.putParcelableArray(getString(R.string.movie_parcelable), movies);
             outState.putString("mChoosenOption", mChoosenOption);
@@ -195,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 gridView.setAdapter(movieAdapter);
                 movieAdapter.notifyDataSetChanged();
+
             }
 
 
