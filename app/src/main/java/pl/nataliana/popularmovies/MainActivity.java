@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MOVIE_POSTER_BASE_URL = "http://image.tmdb.org/t/p/";
     public static final String POSTER_SIZE = "w185";
     private static final String TAG = MainActivity.class.getSimpleName();
-    private String mChoosenOption = "popular";
+    private String mChoosenOption = "";
     private MovieAdapter movieAdapter;
     public GridView gridView;
 
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 mChoosenOption = savedOption;
                 showFavorites();
             } else {
+                mChoosenOption = savedOption;
                 showPosters(savedOption);
             }
         }
