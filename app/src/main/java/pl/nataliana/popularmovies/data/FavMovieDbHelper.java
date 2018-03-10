@@ -38,7 +38,7 @@ public class FavMovieDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + FavMovieContract.MovieEntry.TABLE_NAME);
+        db.execSQL("ALTER TABLE " + FavMovieContract.MovieEntry.TABLE_NAME);
         onCreate(db);
     }
 }
