@@ -55,6 +55,18 @@ public class TrailerActivity extends Activity {
                     getParcelableArray(getString(R.string.trailers_parcelable));
 
             if (parcelable != null) {
+
+                int numTrailerObjects = parcelable.length;
+                Trailer[] trailers = new Trailer[numTrailerObjects];
+                for (int i = 0; i < numTrailerObjects; i++) {
+                    trailers[i] = (Trailer) parcelable[i];
+                }
+                for (Trailer trailer : trailers) {
+                    if (trailer != null) {
+                        Log.v(TAG, "POST EXECUTE IMAGE URLS" + trailer);
+                        trailerAdapter.add(trailer);
+                    }
+                }
                 // Load trailer objects into view
                 trailersView.setAdapter(trailerAdapter);
             }

@@ -58,6 +58,13 @@ public class ReviewActivity extends Activity {
                     reviews[i] = (Review) parcelable[i];
                 }
 
+                for (Review review : reviews) {
+                    if (review != null) {
+                        Log.v(TAG, "POST EXECUTE IMAGE URLS" + review);
+                        reviewAdapter.add(review);
+                    }
+                }
+
                 // Load review objects into view
                 reviewsView.setAdapter(reviewAdapter);
             }
